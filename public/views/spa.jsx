@@ -13,6 +13,7 @@ module.exports = React.createClass({
     return (
       <Layout {...this.props} addBundle='true'>
         <Nav {...this.props}/>
+          <div>Test by Nguyen Hong Hien </div>
         <Router.RouteHandler {...this.props}/>
       </Layout>
     );

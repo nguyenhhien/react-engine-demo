@@ -573,7 +573,7 @@ module.exports=require("./lib/React");
 },{"react":190}],200:[function(require,module,exports){
 "use strict";var React=require("react");module.exports=React.createClass({displayName:"exports",render:function(){return React.createElement("section",{className:"spa-section"},React.createElement("h2",null,"Section 3"),React.createElement("p",null,"This is the third section loaded using react router on the client. It is implemented as a ReactJS component."))}});
 },{"react":190}],201:[function(require,module,exports){
-"use strict";var Layout=require("./layout.jsx"),React=require("react"),Nav=require("./nav.jsx"),Router=require("react-router");module.exports=React.createClass({displayName:"exports",render:function(){return React.createElement(Layout,React.__spread({},this.props,{addBundle:"true"}),React.createElement(Nav,React.__spread({},this.props)),React.createElement(Router.RouteHandler,React.__spread({},this.props)))}});
+"use strict";var Layout=require("./layout.jsx"),React=require("react"),Nav=require("./nav.jsx"),Router=require("react-router");module.exports=React.createClass({displayName:"exports",render:function(){return React.createElement(Layout,React.__spread({},this.props,{addBundle:"true"}),React.createElement(Nav,React.__spread({},this.props)),React.createElement("div",null,"Test by Nguyen Hong Hien "),React.createElement(Router.RouteHandler,React.__spread({},this.props)))}});
 },{"./layout.jsx":195,"./nav.jsx":196,"react":190,"react-router":31}]},{},[191])
 
 

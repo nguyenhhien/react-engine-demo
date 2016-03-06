@@ -27,29 +27,52 @@ var app = express();
 
 app.set('port', process.env.PORT || 3000);
 
-// create the view engine with `react-engine`
+/**
+ * 0. the directory where the template files are located
+ */
+app.set('views', __dirname + '/public/views');
+
+/**
+ * 1. Set up a rendering engine (i.e. react-egine)
+ */
+// 1.0 create an instance of react-engine as a rendering instance
 var engine = renderer.server.create({
   reactRoutes: path.join(__dirname + '/public/routes.jsx')
 });
 
-// set the engine
+// 1.1 link the react-engine to a file extension -
+// By default, Express will require() the engine based on the file extension.
+// If you try to render a “foo.jade” file, Express invokes the following internally,
+// and caches the require() on subsequent calls to increase performance.
 app.engine('.jsx', engine);
 
-// set the view directory
-app.set('views', __dirname + '/public/views');
+// NOTE I think it's specific to react-engine (but I'm not very sure here)
+app.set('view', renderer.expressView);
 
-// set jsx as the view engine
+/**
+ * 2. the default engine extension to use when omitted - set jsx as the view engine.
+ * After the view engine is set, you don’t have to specify the engine or load the template engine module in your app;
+ * Express loads the module internally, as shown below (for the above example).
+ */
 app.set('view engine', 'jsx');
 
-// finally, set the custom view
-app.set('view', renderer.expressView);
+/**
+ * 3. How to serve static files
+ */
+app.use(express.static(__dirname + '/public'));
 
 app.use(compress());
 
-//expose public folder as static assets
-app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res) {
+  /**
+   * Express-compliant template engines such as Jade export a function named __express(filePath, options, callback),
+   * which is called by the res.render() function to render the template code.
+   *
+   * Some template engines do not follow this convention.
+   * The Consolidate.js library follows this convention by mapping all of the popular Node.js template engines,
+   * and therefore works seamlessly within Express.
+   */
   res.render('home', {
     title: 'React Engine Demo',
     name: 'Home',
@@ -66,6 +89,9 @@ app.get('/page2', function(req, res) {
 });
 
 app.get('/spa*', function(req, res) {
+
+  console.log('SPA request at %s', req.url);
+  
   res.render(req.url, {
     title: 'SPA - React Engine Demo',
     name: 'React SPA',
